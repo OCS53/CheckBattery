@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>CheckBattery</RootNamespace>
+    <AssemblyName>CheckBattery</AssemblyName>
+    <UseWmi>false</UseWmi>
+    <UseWmi Condition="'$(OS)' == 'Windows_NT'">true</UseWmi>
+    <UseWmi Condition="$(RuntimeIdentifier.StartsWith('win'))">true</UseWmi>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(UseWmi)' == 'true'">
+    <DefineConstants>$(DefineConstants);WINDOWS_WMI</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CheckBattery.Core\CheckBattery.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseWmi)' == 'true'">
+    <PackageReference Include="System.Management" Version="8.0.0" />
+  </ItemGroup>
+</Project>

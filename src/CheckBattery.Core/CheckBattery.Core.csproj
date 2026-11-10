@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>CheckBattery.Core</RootNamespace>
+    <AssemblyName>CheckBattery.Core</AssemblyName>
+  </PropertyGroup>
+</Project>
