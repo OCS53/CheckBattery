@@ -14,18 +14,40 @@ Windows 노트북 배터리가 지금 어느 정도인지 재는 콘솔 프로�
 
 ## 준비
 
-Windows 10 또는 Windows 11, 그리고 [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)가 필요합니다.
+Windows 10 또는 Windows 11, 그리고 [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)가 필요합니다. Visual Studio 2026을 쓰면 SDK가 함께 설치됩니다.
+
+## IDE에서 이어서 빌드
+
+저장소 루트의 `CheckBattery.sln` 을 엽니다. Visual Studio, Rider, Cursor, VS Code 모두 이 파일을 사용합니다.
+
+1. 시작 프로젝트는 `CheckBattery` 입니다. 다른 프로젝트가 시작 프로젝트면 `CheckBattery`로 바꿉니다. `CheckBattery.Core` 는 라이브러리라 직접 실행되지 않습니다.
+2. 빌드는 `Debug` 또는 `Release`, 플랫폼은 `Any CPU` 입니다.
+3. 실행 프로필은 다섯 개입니다. 기본값 `Demo` 는 가상 성적서라 배터리 없이도 동작합니다.
+
+| 프로필 | 동작 |
+| --- | --- |
+| Demo | 가상 배터리 성적서 |
+| Demo worn | 건강도 65% 가상 배터리 |
+| Info | 이 노트북의 배터리를 한 번 읽습니다 |
+| Monitor | 잔량과 전력을 계속 표시합니다 |
+| Test | 30분 방전 시험, 부하 light |
+
+Cursor나 VS Code에서는 C# 확장을 설치한 뒤 디버그 패널에서 같은 프로필을 고릅니다. 빌드 단축키는 솔루션 빌드이고, 테스트 작업은 `dotnet test` 입니다.
+
+처음 열면 솔루션을 복원합니다. 복원이 끝나면 `CheckBattery` 프로젝트를 빌드하면 됩니다.
 
 ```bat
 dotnet publish src\CheckBattery -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist
 dist\CheckBattery.exe info
 ```
 
-SDK만 있고 바로 실행하려면 저장소 루트의 `CheckBattery.cmd` 에 인자를 넘기면 됩니다.
+SDK만 있고 바로 실행하려면 저장소 루트의 `CheckBattery.cmd` 에 인자를 넘기면 됩니다. 인자가 없으면 Demo 프로필이 실행됩니다.
 
 ```bat
+CheckBattery.cmd
 CheckBattery.cmd info
 CheckBattery.cmd test --minutes 45 --load steady
+CheckBattery.cmd help
 ```
 
 배터리를 읽는 명령은 노트북의 Windows에서 동작합니다. `demo` 는 가상 데이터로 성적서 모양만 만들므로 다른 운영체제에서도 동작합니다.
@@ -87,7 +109,7 @@ CheckBattery demo --worn
 
 ## 개발
 
-계산과 성적서 문장은 Windows API와 분리되어 있습니다. 저장소 루트에서 다음으로 확인합니다.
+대상 프레임워크는 `net10.0` 입니다. `global.json` 은 .NET 10 이상의 안정 SDK를 고릅니다. 계산과 성적서 문장은 Windows API와 분리되어 있습니다. 저장소 루트에서 다음으로 확인합니다.
 
 ```bash
 dotnet test
