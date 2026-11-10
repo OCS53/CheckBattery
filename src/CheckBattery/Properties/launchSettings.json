@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "Demo": {
+      "commandName": "Project",
+      "commandLineArgs": "demo"
+    },
+    "Demo worn": {
+      "commandName": "Project",
+      "commandLineArgs": "demo --worn"
+    },
+    "Info": {
+      "commandName": "Project",
+      "commandLineArgs": "info"
+    },
+    "Monitor": {
+      "commandName": "Project",
+      "commandLineArgs": "monitor"
+    },
+    "Test": {
+      "commandName": "Project",
+      "commandLineArgs": "test --minutes 30 --load light"
+    }
+  }
+}
